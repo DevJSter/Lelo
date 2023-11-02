@@ -87,6 +87,22 @@ print("L"+str(pos)+":")
 for i in pl:
     print(str(list(i))+": "+str(pl[i]))
 print()
+
+confidence_threshold = 0.6  # 60%
+
+for itemset in pl.keys():
+    if len(itemset) >= 2:
+        for i in range(1, len(itemset)):
+            antecedent = frozenset(itemset - {itemset[i]})
+            consequent = frozenset({itemset[i]})
+            confidence = pl[itemset] / pl[antecedent]
+            if confidence >= confidence_threshold:
+                print(f"Rule: {antecedent} -> {consequent}")
+                print(f"Support: {pl[itemset]}")
+                print(f"Confidence: {confidence:.2f}")
+                print("-" * 40)
+
+
 ```
 # 6th Data discretization and visualization
 ---
