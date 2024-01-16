@@ -1,21 +1,15 @@
 #include <iostream>
-#include <map>
 
 using namespace std;
 
 string substitutionEncrypt(const string& input, int key) {
     string result;
-    string all_letrs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN"
-                       "OPQRSTUVWXYZ";
-
-    map<char, char> dict;
-    for (int i = 0; i < all_letrs.length(); i++) {
-        dict[all_letrs[i]] = all_letrs[(i + key) % all_letrs.length()];
-    }
+    string all_letrs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     for (char c : input) {
-        if (all_letrs.find(c) != string::npos) {
-            result += dict[c];
+        size_t pos = all_letrs.find(c);
+        if (pos != string::npos) {
+            result += all_letrs[(pos + key) % all_letrs.length()];
         } else {
             result += c;
         }
@@ -26,17 +20,12 @@ string substitutionEncrypt(const string& input, int key) {
 
 string substitutionDecrypt(const string& input, int key) {
     string result;
-    string all_letrs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN"
-                       "OPQRSTUVWXYZ";
-
-    map<char, char> dict;
-    for (int i = 0; i < all_letrs.length(); i++) {
-        dict[all_letrs[i]] = all_letrs[(i - key + all_letrs.length()) % all_letrs.length()];
-    }
+    string all_letrs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     for (char c : input) {
-        if (all_letrs.find(c) != string::npos) {
-            result += dict[c];
+        size_t pos = all_letrs.find(c);
+        if (pos != string::npos) {
+            result += all_letrs[(pos - key + all_letrs.length()) % all_letrs.length()];
         } else {
             result += c;
         }
