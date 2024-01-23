@@ -64,7 +64,7 @@ int main() {
 #include<bits/stdc++.h>
 using namespace std;
 
-string const key = "HACK"; 
+string const key = "TILAK"; 
 map<int, int> keyMap;
 
 void setPermutationOrder()
