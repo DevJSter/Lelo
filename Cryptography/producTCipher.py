@@ -216,3 +216,4 @@ if __name__ == '__main__':
     cipher_text = encryption.endToEndEncryptionProcess()
     decryption = Decryption(cipher_text, key, row_transposition_key)
     decryption.endToEndDecryptionProcess()
+    
