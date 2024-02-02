@@ -13,38 +13,40 @@ const motSize = {
     "LOAD": 3, "STORE": 3, "DCR": 1, "INC": 1, "JMP": 3, "JNZ": 3, "HALT": 1
 };
 
-const l = [];
-const relativeAddress = [];
-const machineCode = [];
-let RA = 0;
-let current = 0;
-let count = 0;
-
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
-rl.question("Enter the no of instruction lines: ", (n) => {
-    n = parseInt(n);
+const instructions = [];
+const relativeAddress = [];
+const machineCode = [];
+let RA = 0;
+let current = 0;
+let count = 0;
+let n = 0;
 
-    const readInstruction = (i) => {
-        if (i < n) {
-            rl.question(`Enter instruction line ${i + 1}: `, (instruction) => {
-                l.push(instruction.toUpperCase());
-                readInstruction(i + 1);
-            });
-        } else {
-            rl.close();
-            processInstructions();
-        }
-    };
+const readInstruction = () => {
+    rl.question("Enter the no of instruction lines: ", (input) => {
+        n = parseInt(input);
+        readNextInstruction(0);
+    });
+};
 
-    readInstruction(0);
-});
+const readNextInstruction = (i) => {
+    if (i < n) {
+        rl.question(`Enter instruction line ${i + 1}: `, (instruction) => {
+            instructions.push(instruction.toUpperCase());
+            readNextInstruction(i + 1);
+        });
+    } else {
+        rl.close();
+        processInstructions();
+    }
+};
 
 const processInstructions = () => {
-    l.forEach((x, i) => {
+    instructions.forEach((x, i) => {
         if (x.includes(" ")) {
             const [a, b] = x.split(' ');
             const value = motOpCode[a];
@@ -82,6 +84,9 @@ const processInstructions = () => {
     // Print the result
     console.log("Relative Address    Instruction        OpCode");
     for (let i = 0; i < n; i++) {
-        console.log(`${relativeAddress[i]}                 ${l[i]}          ${machineCode[i]}`);
+        console.log(`${relativeAddress[i]}                 ${instructions[i]}          ${machineCode[i]}`);
     }
 };
+
+// Start the process by reading the number of instruction lines
+readInstruction();
